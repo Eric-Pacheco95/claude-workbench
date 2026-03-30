@@ -82,6 +82,6 @@ THINK
 
 - **Follows:** `/research`
 - **Precedes:** `/create-prd`, `/implement-prd`
-- **Composes:** `/first-principles` + `/red-team` (parallel agents)
+- **Composes:** `/first-principles` + `/find-logical-fallacies` + `/red-team` (parallel agents)
 
 INPUT:

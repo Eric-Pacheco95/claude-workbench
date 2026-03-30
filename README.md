@@ -8,7 +8,7 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 
 - **The Algorithm**: A 7-phase execution loop (OBSERVE -> THINK -> PLAN -> BUILD -> EXECUTE -> VERIFY -> LEARN) that ensures you think before you build
 - **Ideal State Criteria (ISC)**: Binary-testable acceptance criteria with a 6-check quality gate
-- **13 Skills**: Reusable workflow patterns that chain together into pipelines
+- **15 Skills**: Reusable workflow patterns that chain together into pipelines
 - **Security Rules**: Constitutional rules that prevent secrets exposure, prompt injection, and destructive operations
 
 ## Quick Start
@@ -33,15 +33,18 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 | `/delegation` | ORCHESTRATE | Route any task to the right skill |
 | `/workflow-engine` | ORCHESTRATE | Chain skills into automated pipelines |
 | `/create-pattern` | BUILD | Create new reusable skills |
+| `/find-logical-fallacies` | THINK | Identify reasoning flaws, hidden assumptions, false analogies |
+| `/create-keynote` | BUILD | Build narrative-driven slide decks with speaker notes |
 | `/improve-prompt` | UTILITY | Rewrite prompts for clarity and reliability |
 
 ## Built-in Pipelines
 
 ```
 Full build:      /research -> /create-prd -> /implement-prd -> /quality-gate
-Deep analysis:   /first-principles -> /red-team -> /create-prd
+Deep analysis:   /first-principles -> /find-logical-fallacies -> /red-team -> /create-prd
 Security review: /red-team --stride -> /review-code
 New project:     /research -> /first-principles -> /create-prd -> /implement-prd
+Presentation:    /research -> /create-keynote --pptx
 ```
 
 ## Directory Structure
@@ -51,7 +54,7 @@ claude-workbench/
 +-- CLAUDE.md                  # Root context and steering rules
 +-- .claude/
 |   +-- settings.json          # Claude Code permissions
-|   +-- skills/                # 13 skill definitions
+|   +-- skills/                # 15 skill definitions
 +-- security/
 |   +-- constitutional-rules.md
 +-- docs/                      # PRDs, specs, research briefs

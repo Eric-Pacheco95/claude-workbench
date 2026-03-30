@@ -75,6 +75,7 @@ Before BUILD begins, every ISC set must pass these 6 checks. If any check fails,
 - Before any hard-to-reverse decision (architecture, tool adoption, 3+ paths), run `/architecture-review`
 - Before declaring any ISC-tracked task complete, re-read the ISC file and verify each criterion with evidence
 - After completing a build phase, check `git status` for uncommitted work and prompt to commit
+- AI-assisted decisions should include `[AI-assisted]` in the commit message for auditability (e.g., `[AI-assisted] chose event-driven over polling for notification system`)
 
 ### Working Style
 
@@ -97,7 +98,7 @@ Route work through skills whenever possible:
 
 **Full build chain: `/research` -> `/create-prd` -> `/implement-prd` -> `/quality-gate`**
 
-**13 skills available.** Run `/delegation` to see the full routing table.
+**15 skills available.** Run `/delegation` to see the full routing table.
 
 ## Directory Structure
 
