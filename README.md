@@ -8,7 +8,7 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 
 - **The Algorithm**: A 7-phase execution loop (OBSERVE -> THINK -> PLAN -> BUILD -> EXECUTE -> VERIFY -> LEARN) that ensures you think before you build
 - **Ideal State Criteria (ISC)**: Binary-testable acceptance criteria with a 6-check quality gate
-- **15 Skills**: Reusable workflow patterns that chain together into pipelines
+- **28 Skills**: Reusable workflow patterns that chain together into pipelines
 - **Security Rules**: Constitutional rules that prevent secrets exposure, prompt injection, and destructive operations
 
 ## Quick Start
@@ -22,29 +22,44 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 | Skill | Stage | What It Does |
 |-------|-------|-------------|
 | `/research` | OBSERVE | Research any topic (market, technical, live) |
+| `/absorb` | OBSERVE | Absorb a URL -- dual-lens wisdom + fallacy analysis |
+| `/deep-audit` | OBSERVE | Multi-axis codebase audit (architecture, security, errors, domain, testing) |
+| `/extract-alpha` | OBSERVE | Extract the highest-signal, most novel ideas from any content |
 | `/first-principles` | THINK | Break a problem down to bedrock assumptions |
 | `/red-team` | THINK | Stress-test a plan for weaknesses and failure modes |
 | `/architecture-review` | THINK | Parallel multi-angle analysis (first-principles + fallacies + red-team) |
+| `/find-logical-fallacies` | THINK | Identify reasoning flaws, hidden assumptions, false analogies |
+| `/analyze-claims` | THINK | Audit claims, map evidence, rate argument support |
+| `/make-prediction` | THINK | Structured multi-outcome predictions with committed probabilities |
 | `/create-prd` | PLAN | Generate a PRD with ISC criteria |
+| `/project-init` | PLAN | Full ISC project pipeline -- research, stress-test, PRD |
 | `/implement-prd` | BUILD | Execute a PRD end-to-end with verify loops |
+| `/create-pattern` | BUILD | Create new reusable skills |
+| `/create-keynote` | BUILD | Build narrative-driven slide decks with speaker notes |
+| `/visualize` | BUILD | Generate Mermaid diagrams from projects, workflows, systems |
+| `/write-essay` | BUILD | Write a clear, direct, publish-ready essay |
 | `/review-code` | VERIFY | Security-focused code review |
 | `/quality-gate` | VERIFY | Audit completed work for compliance |
+| `/validation` | VERIFY | Run ISC format gate and verify all criteria |
+| `/extract-wisdom` | LEARN | Extract ideas, insights, quotes, habits from any content |
+| `/teach` | LEARN | Deep-dive lesson on any topic with worked examples |
+| `/update-steering-rules` | LEARN | Propose new or updated CLAUDE.md steering rules |
 | `/commit` | ORCHESTRATE | Clean conventional commits with emoji |
 | `/delegation` | ORCHESTRATE | Route any task to the right skill |
 | `/workflow-engine` | ORCHESTRATE | Chain skills into automated pipelines |
-| `/create-pattern` | BUILD | Create new reusable skills |
-| `/find-logical-fallacies` | THINK | Identify reasoning flaws, hidden assumptions, false analogies |
-| `/create-keynote` | BUILD | Build narrative-driven slide decks with speaker notes |
+| `/backlog` | ORCHESTRATE | Capture task ideas from chat into the project backlog |
 | `/improve-prompt` | UTILITY | Rewrite prompts for clarity and reliability |
 
 ## Built-in Pipelines
 
 ```
-Full build:      /research -> /create-prd -> /implement-prd -> /quality-gate
-Deep analysis:   /first-principles -> /find-logical-fallacies -> /red-team -> /create-prd
-Security review: /red-team --stride -> /review-code
-New project:     /research -> /first-principles -> /create-prd -> /implement-prd
-Presentation:    /research -> /create-keynote --pptx
+Full build:         /research -> /create-prd -> /implement-prd -> /quality-gate
+Deep analysis:      /first-principles -> /find-logical-fallacies -> /red-team -> /create-prd
+Security review:    /red-team --stride -> /review-code
+New project:        /project-init -> /implement-prd -> /quality-gate
+Content analysis:   /absorb <url> --deep -> /extract-alpha -> /analyze-claims
+Prediction:         /research -> /make-prediction --deep -> /red-team
+Presentation:       /research -> /create-keynote --pptx
 ```
 
 ## Directory Structure
@@ -54,27 +69,36 @@ claude-workbench/
 +-- CLAUDE.md                  # Root context and steering rules
 +-- .claude/
 |   +-- settings.json          # Claude Code permissions
-|   +-- skills/                # 15 skill definitions
+|   +-- skills/                # 28 skill definitions
 +-- security/
 |   +-- constitutional-rules.md
 +-- docs/                      # PRDs, specs, research briefs
+|   +-- projects/              # Per-project directories
+|   +-- absorbed/              # Absorbed URL analyses
+|   +-- predictions/           # Prediction records
+|   +-- backlog.md             # Task backlog
++-- context/
+|   +-- teach/                 # Saved lessons from /teach
++-- knowledge/                 # Domain knowledge by topic
 +-- history/
-    +-- decisions/             # Decision log with rationale
+|   +-- decisions/             # Decision log with rationale
+|   +-- validations/           # ISC validation reports
 ```
 
-## No Learning, No Autonomous Systems
+## Stateless by Design
 
-This harness is intentionally stateless. It does not:
-- Store learning signals or synthesis
+This harness is intentionally stateless at the infrastructure level. It does not:
 - Run autonomous background agents
-- Maintain persistent memory across sessions
-- Track personal identity or goals
+- Maintain cross-session memory automatically
+- Connect to external services by default
 
 It **does**:
 - Follow a disciplined workflow algorithm
-- Enforce security rules
+- Enforce security rules on every action
 - Log decisions for audit trails
 - Create reusable skill patterns
+- Track predictions for future resolution
+- Absorb and analyze external content
 
 ## Creating New Skills
 
