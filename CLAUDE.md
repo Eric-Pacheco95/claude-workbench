@@ -45,7 +45,12 @@ Before BUILD begins, every ISC set must pass these 6 checks. If any check fails,
 | Project status | Check `docs/projects/` for active PRDs |
 | Decision rationale | `history/decisions/` |
 | Domain knowledge | `knowledge/` |
-| Session lessons | `context/teach/` |
+| Regulatory context | `knowledge/regulatory/` |
+| Term definitions | `context/glossary.md` |
+| Stakeholder map | `context/stakeholders/{project}.md` |
+| Artifact templates | `templates/` |
+| Past lessons | `history/lessons-learned/` |
+| Sprint history | `context/sprint-log/` |
 
 ## Core Principles
 
@@ -66,6 +71,19 @@ Before BUILD begins, every ISC set must pass these 6 checks. If any check fails,
 - Never ask the user to paste secrets in chat -- instead confirm setup by offering a file-existence check or a smoke-test command
 - When checking if a secret/credential exists in a file, always use `grep -c` (count only) -- never content-mode grep on .env files
 - Before the first commit to any new repo, run `git ls-files` to verify no sensitive content is tracked
+
+### Active Context Population
+
+> Claude actively writes to memory directories during session work — not just at session end.
+> These rules are the lightweight equivalent of a learning loop for work sessions.
+
+- **Glossary**: When you introduce, use, or encounter a term, acronym, or system name not in `context/glossary.md`, add it before the session ends — append under "Project-Specific Terms"; do not wait to be asked
+- **Templates**: When generating any requirements doc, ADR, meeting notes, or status update, load the relevant template from `templates/` first; if no template fits, generate from scratch then ask if it should become a template
+- **Decision log**: After any significant architecture, design, or process decision — not just code changes — write a record to `history/decisions/` using the ADR template; include the alternatives considered and why they were rejected
+- **Lessons learned**: After completing a sprint, milestone, or resolving a significant issue, prompt the user to add a lessons-learned entry to `history/lessons-learned/`; do not write it without user input — they own the retrospective
+- **Stakeholder map**: When starting work on a new project, check if `context/stakeholders/{project}.md` exists; if not, offer to create one during OBSERVE phase
+- **Regulatory flags**: When generating any artifact that touches data handling, model use, client information, or compliance, check `knowledge/regulatory/` for relevant context and include applicable NFRs or acceptance criteria automatically
+- **Sprint log**: After completing a significant deliverable, append a one-line entry to `context/sprint-log/{project}.md` — date, what was delivered, any key decisions made
 
 ### Workflow Discipline
 
@@ -118,15 +136,26 @@ claude-workbench/
 |   +-- skills/                # Modular skill definitions (SKILL.md per skill)
 +-- security/                  # Defense layer
 |   +-- constitutional-rules.md
++-- templates/                 # Reusable artifact formats (ACTIVELY USED)
+|   +-- requirements.md        # Requirements document
+|   +-- adr.md                 # Architecture Decision Record
+|   +-- meeting-notes.md       # Meeting notes
+|   +-- status-update.md       # Status update / sprint report
++-- context/                   # Session context -- Claude actively populates
+|   +-- glossary.md            # Terms, acronyms, system names (Claude appends new terms)
+|   +-- stakeholders/          # Per-project stakeholder maps
+|   +-- sprint-log/            # Lightweight delivery history per project
++-- knowledge/                 # Domain reference -- Claude reads when generating artifacts
+|   +-- banking/               # Banking domain patterns
+|   +-- regulatory/            # OSFI, PIPEDA, open banking summaries
+|   +-- standards/             # Story format, DoR/DoD, review checklists
 +-- docs/                      # PRDs, specs, research briefs, predictions
 |   +-- projects/              # One subdirectory per project
 |   +-- absorbed/              # Content absorbed via /absorb
 |   +-- predictions/           # Prediction records
 |   +-- backlog.md             # Captured task ideas
-+-- context/                   # Session context and lessons
-|   +-- teach/                 # Saved lessons from /teach
-+-- knowledge/                 # Domain knowledge by topic
-+-- history/                   # Audit trail
-|   +-- decisions/             # Decision log with rationale
++-- history/                   # Audit trail -- immutable
+|   +-- decisions/             # Decision log with rationale (ADR format)
+|   +-- lessons-learned/       # Sprint/milestone retrospectives
 |   +-- validations/           # ISC validation reports
 ```
