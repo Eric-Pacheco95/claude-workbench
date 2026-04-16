@@ -17,7 +17,7 @@ All non-trivial tasks use the 7-phase loop:
 4. **BUILD** -- Implement the solution
 5. **EXECUTE** -- Run, deploy, integrate
 6. **VERIFY** -- Test against ISC, run defensive checks
-7. **LEARN** -- Capture decisions, log rationale for future reference
+7. **LEARN** -- Capture the lesson via `/learning-capture`; log rationale to `history/decisions/` for future reference
 
 ## Ideal State Criteria (ISC) Rules
 
@@ -71,6 +71,7 @@ Before BUILD begins, every ISC set must pass these 6 checks. If any check fails,
 - Never ask the user to paste secrets in chat -- instead confirm setup by offering a file-existence check or a smoke-test command
 - When checking if a secret/credential exists in a file, always use `grep -c` (count only) -- never content-mode grep on .env files
 - Before the first commit to any new repo, run `git ls-files` to verify no sensitive content is tracked
+- **PII pre-commit hook is mandatory.** Before using `/learning-capture` on real content, run `git config core.hooksPath .githooks` once per clone to enable the PII guard at `tools/pre-commit/pii-guard.py`. The hook hard-blocks commits containing SIN, PAN, API keys, JWTs, or other credential patterns staged under `history/lessons-learned/` or `history/synthesis/`. Warning-only PII defense is not sufficient in regulated environments
 
 ### Active Context Population
 
@@ -80,7 +81,7 @@ Before BUILD begins, every ISC set must pass these 6 checks. If any check fails,
 - **Glossary**: When you introduce, use, or encounter a term, acronym, or system name not in `context/glossary.md`, add it before the session ends — append under "Project-Specific Terms"; do not wait to be asked
 - **Templates**: When generating any requirements doc, ADR, meeting notes, or status update, load the relevant template from `templates/` first; if no template fits, generate from scratch then ask if it should become a template
 - **Decision log**: After any significant architecture, design, or process decision — not just code changes — write a record to `history/decisions/` using the ADR template; include the alternatives considered and why they were rejected
-- **Lessons learned**: After completing a sprint, milestone, or resolving a significant issue, prompt the user to add a lessons-learned entry to `history/lessons-learned/`; do not write it without user input — they own the retrospective
+- **Lessons learned**: After any non-trivial task completes, invoke `/learning-capture` to write a structured lesson to `history/lessons-learned/{project}/` — this is the concrete implementation of ALGORITHM Step 7. For sprint/milestone retrospectives specifically, prompt the user first — they own the larger retro. At end of sprint/quarter/initiative, invoke `/synthesize-signals` to distill accumulated lessons into proposed steering rules, then `/update-steering-rules --audit` to review and apply approved rules
 - **Stakeholder map**: When starting work on a new project, check if `context/stakeholders/{project}.md` exists; if not, offer to create one during OBSERVE phase
 - **Regulatory flags**: When generating any artifact that touches data handling, model use, client information, or compliance, check `knowledge/regulatory/` for relevant context and include applicable NFRs or acceptance criteria automatically
 - **Sprint log**: After completing a significant deliverable, append a one-line entry to `context/sprint-log/{project}.md` — date, what was delivered, any key decisions made
@@ -122,9 +123,11 @@ Route work through skills whenever possible:
 3. If no skill matches but the task is repeatable, consider `/create-pattern`
 4. If the task is truly one-off, proceed normally
 
-**Full build chain: `/research` -> `/create-prd` -> `/implement-prd` -> `/quality-gate`**
+**Full build chain: `/research` -> `/create-prd` -> `/implement-prd` -> `/quality-gate` -> `/learning-capture`**
 
-**28 skills available.** Run `/delegation` to see the full routing table.
+**Learning loop (manual, human-gated at every step):** `/learning-capture` (per task) -> `/synthesize-signals` (end of sprint/quarter) -> `/update-steering-rules --audit` (review proposed rules, apply approved).
+
+**31 skills available.** Run `/delegation` to see the full routing table.
 
 ## Directory Structure
 

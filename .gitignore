@@ -29,3 +29,13 @@ package-lock.json
 
 # Claude Code session data
 .claude/todos/
+
+# PII guard override audit log (local-only)
+tools/pre-commit/.override.log
+
+# Optional: teams handling highly sensitive content can opt-out of tracking
+# captured lessons and synthesis by uncommenting the lines below. The default
+# is to VERSION-CONTROL captures so the team's accumulated lessons are shared;
+# the pre-commit PII hook is the primary defense against leaking sensitive data.
+# history/lessons-learned/
+# history/synthesis/

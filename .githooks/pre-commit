@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# claude-workbench pre-commit hook
+# Enforces PII hard-block scanner on staged captures.
+#
+# Install with:  git config core.hooksPath .githooks
+
+set -eu
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+GUARD="$REPO_ROOT/tools/pre-commit/pii-guard.py"
+
+if [[ ! -f "$GUARD" ]]; then
+    echo "pre-commit: pii-guard.py missing at $GUARD — commit blocked for safety." >&2
+    exit 1
+fi
+
+# Prefer py launcher on Windows, python3 elsewhere
+if command -v py >/dev/null 2>&1; then
+    PYTHON="py -3"
+elif command -v python3 >/dev/null 2>&1; then
+    PYTHON="python3"
+elif command -v python >/dev/null 2>&1; then
+    PYTHON="python"
+else
+    echo "pre-commit: no Python interpreter found — install Python 3 or override via GIT_PII_FORCE=1." >&2
+    exit 1
+fi
+
+$PYTHON "$GUARD"

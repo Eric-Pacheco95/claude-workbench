@@ -8,8 +8,9 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 
 - **The Algorithm**: A 7-phase execution loop (OBSERVE -> THINK -> PLAN -> BUILD -> EXECUTE -> VERIFY -> LEARN) that ensures you think before you build
 - **Ideal State Criteria (ISC)**: Binary-testable acceptance criteria with a 6-check quality gate
-- **28 Skills**: Reusable workflow patterns that chain together into pipelines
+- **31 Skills**: Reusable workflow patterns that chain together into pipelines
 - **Security Rules**: Constitutional rules that prevent secrets exposure, prompt injection, and destructive operations
+- **PII Pre-Commit Guard**: Hard-block scanner that prevents SIN, PAN, API keys, JWTs, and other credential patterns from being committed (enable with `git config core.hooksPath .githooks`)
 
 ## Quick Start
 
@@ -41,6 +42,9 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 | `/review-code` | VERIFY | Security-focused code review |
 | `/quality-gate` | VERIFY | Audit completed work for compliance |
 | `/validation` | VERIFY | Run ISC format gate and verify all criteria |
+| `/security-audit` | VERIFY | Secrets, gitignore, config, constitutional compliance scan |
+| `/learning-capture` | LEARN | End-of-task lesson capture -- structured, multi-user, PII-safe |
+| `/synthesize-signals` | LEARN | Distill accumulated lessons into proposed steering rules |
 | `/extract-wisdom` | LEARN | Extract ideas, insights, quotes, habits from any content |
 | `/teach` | LEARN | Deep-dive lesson on any topic with worked examples |
 | `/update-steering-rules` | LEARN | Propose new or updated CLAUDE.md steering rules |
@@ -53,10 +57,11 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 ## Built-in Pipelines
 
 ```
-Full build:         /research -> /create-prd -> /implement-prd -> /quality-gate
+Full build:         /research -> /create-prd -> /implement-prd -> /quality-gate -> /learning-capture
 Deep analysis:      /first-principles -> /find-logical-fallacies -> /red-team -> /create-prd
-Security review:    /red-team --stride -> /review-code
-New project:        /project-init -> /implement-prd -> /quality-gate
+Security review:    /red-team --stride -> /review-code -> /security-audit
+New project:        /project-init -> /implement-prd -> /quality-gate -> /learning-capture
+Learning loop:      /learning-capture (per task) -> /synthesize-signals (sprint/quarter) -> /update-steering-rules --audit
 Content analysis:   /absorb <url> --deep -> /extract-alpha -> /analyze-claims
 Prediction:         /research -> /make-prediction --deep -> /red-team
 Presentation:       /research -> /create-keynote --pptx
@@ -69,20 +74,31 @@ claude-workbench/
 +-- CLAUDE.md                  # Root context and steering rules
 +-- .claude/
 |   +-- settings.json          # Claude Code permissions
-|   +-- skills/                # 28 skill definitions
+|   +-- skills/                # 31 skill definitions
++-- .githooks/
+|   +-- pre-commit             # PII guard hook (install via git config core.hooksPath .githooks)
 +-- security/
 |   +-- constitutional-rules.md
++-- templates/                 # Artifact templates (requirements, ADR, meeting-notes, status-update)
++-- context/
+|   +-- glossary.md            # Terms, acronyms, system names (auto-populated)
+|   +-- stakeholders/          # Per-project stakeholder maps
+|   +-- sprint-log/            # Lightweight delivery history per project
+|   +-- teach/                 # Saved lessons from /teach
++-- knowledge/                 # Domain knowledge by topic
 +-- docs/                      # PRDs, specs, research briefs
 |   +-- projects/              # Per-project directories
 |   +-- absorbed/              # Absorbed URL analyses
 |   +-- predictions/           # Prediction records
-|   +-- backlog.md             # Task backlog
-+-- context/
-|   +-- teach/                 # Saved lessons from /teach
-+-- knowledge/                 # Domain knowledge by topic
+|   +-- backlog.md             # Task backlog + proposed skills
 +-- history/
-|   +-- decisions/             # Decision log with rationale
+|   +-- decisions/             # Decision log with rationale (ADR format)
+|   +-- lessons-learned/       # Per-task lessons from /learning-capture
+|   +-- synthesis/             # Sprint/quarter themes from /synthesize-signals
+|   +-- security/              # Audit logs from /security-audit
 |   +-- validations/           # ISC validation reports
++-- tools/
+|   +-- pre-commit/            # PII guard scanner (pii-guard.py)
 ```
 
 ## Stateless by Design
