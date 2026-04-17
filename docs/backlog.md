@@ -23,23 +23,25 @@
 
 ## Agile / Jira Gap Pack
 
-### Build next (top-5 demo set)
+### Completed -- Phase 3 (2026-04-16, placeholder v1 -- refine after field use)
 
-1. **`/jira-story-draft`** (M) — Problem statement + context -> Jira-ready story (summary, description, acceptance criteria, DoR check). Uses `templates/requirements.md` as upstream if available. Highest-value BA/PO daily skill.
-2. **`/acceptance-criteria`** (S) — Story -> Gherkin / Given-When-Then acceptance criteria with edge cases, error paths, non-functional NFRs. Integrates with `/jira-story-draft`.
-3. **`/refinement-prep`** (S) — Upcoming sprint backlog -> stories needing refinement + what's missing (ACs, estimates, dependencies). Pre-grooming prep.
-4. **`/standup-brief`** (S) — Yesterday / today / blockers formatted with work-item links and PR / ticket status. Daily ritual skill.
-5. **`/retro-facilitator`** (M) — Sprint data -> retro prompts (Start/Stop/Continue, 4Ls, Mad/Sad/Glad). Pairs with `/synthesize-signals` for cross-sprint pattern detection.
+All 10 skills shipped as working placeholders. They follow the workbench SKILL.md structure and are demo-ready; refine per real usage.
+
+1. **`/jira-story-draft`** -- Problem statement + context -> INVEST story (summary, description, AC stub, NFRs, DoR checklist, metadata)
+2. **`/acceptance-criteria`** -- Story -> Gherkin (happy + edge + negative + NFR), or checklist format via `--format`
+3. **`/refinement-prep`** -- Batch backlog -> 7-point gap report per story, classified Ready / Needs Work / Split
+4. **`/standup-brief`** -- Yesterday / Today / Blockers from git log + tickets + user notes
+5. **`/retro-facilitator`** -- Sprint retro facilitation doc (ssc / 4ls / msg) with cross-sprint pattern detection
+6. **`/sprint-planning`** -- Backlog + velocity + capacity -> committed + stretch sets with risk register
+7. **`/release-notes`** -- Release window -> internal changelog + stakeholder summary; audit notes for regulated changes
+8. **`/definition-of-ready`** -- Single-story DoR gate with pass/fail verdict and specific gap list
+9. **`/incident-postmortem`** -- Blameless postmortem: timeline, 5-whys, contributing factors, action items
+10. **`/ba-elicitation-prep`** -- Elicitation prep: session goal + 8-15 open questions + anticipated friction
 
 ### Backlog (next /extract-harness run)
 
-6. **`/sprint-planning`** (M) — Backlog + historical velocity -> proposed sprint commitment with capacity math.
-7. **`/release-notes`** (S) — Commits / tickets since last tag -> stakeholder-readable changelog.
-8. **`/definition-of-ready`** (S) — Apply DoR checklist to a ticket, flag gaps, propose fixes. On-demand gate.
-9. **`/incident-postmortem`** (M) — Incident -> blameless postmortem using ADR-style format (timeline, contributing factors, action items).
-10. **`/ba-elicitation-prep`** (S) — Stakeholder interview prep -- role-specific question bank from `context/stakeholders/{project}.md`.
-11. **`/velocity-forecast`** (S) — Historical velocity -> completion forecast with confidence band. Quarterly planning.
-12. **`/epic-breakdown`** (M) — Epic -> story tree (distinct from `/story-split` which handles story -> tasks).
+11. **`/velocity-forecast`** (S) -- Historical velocity -> completion forecast with confidence band. Quarterly planning.
+12. **`/epic-breakdown`** (M) -- Epic -> story tree (distinct from `/story-split` which handles story -> tasks).
 
 ## Knowledge gaps (deferred — do not auto-extract)
 

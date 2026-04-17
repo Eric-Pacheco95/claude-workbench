@@ -8,7 +8,7 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 
 - **The Algorithm**: A 7-phase execution loop (OBSERVE -> THINK -> PLAN -> BUILD -> EXECUTE -> VERIFY -> LEARN) that ensures you think before you build
 - **Ideal State Criteria (ISC)**: Binary-testable acceptance criteria with a 6-check quality gate
-- **31 Skills**: Reusable workflow patterns that chain together into pipelines
+- **41 Skills**: Reusable workflow patterns that chain together into pipelines
 - **Security Rules**: Constitutional rules that prevent secrets exposure, prompt injection, and destructive operations
 - **PII Pre-Commit Guard**: Hard-block scanner that prevents SIN, PAN, API keys, JWTs, and other credential patterns from being committed (enable with `git config core.hooksPath .githooks`)
 
@@ -48,10 +48,20 @@ Claude Workbench gives you a disciplined framework for using Claude Code to crea
 | `/extract-wisdom` | LEARN | Extract ideas, insights, quotes, habits from any content |
 | `/teach` | LEARN | Deep-dive lesson on any topic with worked examples |
 | `/update-steering-rules` | LEARN | Propose new or updated CLAUDE.md steering rules |
+| `/retro-facilitator` | LEARN | Sprint retro facilitation doc (ssc / 4ls / msg) with cross-sprint patterns |
+| `/incident-postmortem` | LEARN | Blameless postmortem -- timeline, 5-whys, action items |
+| `/ba-elicitation-prep` | OBSERVE | BA stakeholder elicitation prep -- goal + open questions + friction |
+| `/jira-story-draft` | PLAN | Problem statement -> INVEST user story with ACs stub + DoR |
+| `/acceptance-criteria` | PLAN | Story -> Gherkin ACs (happy + edge + negative + NFR) |
+| `/refinement-prep` | PLAN | Batch backlog -> per-story gap report (Ready/Needs Work/Split) |
+| `/sprint-planning` | PLAN | Backlog + velocity + capacity -> committed sprint plan |
+| `/definition-of-ready` | VERIFY | Single-story DoR gate -- pass/fail with gap list |
 | `/commit` | ORCHESTRATE | Clean conventional commits with emoji |
 | `/delegation` | ORCHESTRATE | Route any task to the right skill |
 | `/workflow-engine` | ORCHESTRATE | Chain skills into automated pipelines |
 | `/backlog` | ORCHESTRATE | Capture task ideas from chat into the project backlog |
+| `/standup-brief` | ORCHESTRATE | Daily standup brief -- Yesterday / Today / Blockers |
+| `/release-notes` | ORCHESTRATE | Release window -> internal changelog + stakeholder summary |
 | `/improve-prompt` | UTILITY | Rewrite prompts for clarity and reliability |
 
 ## Built-in Pipelines
@@ -65,6 +75,9 @@ Learning loop:      /learning-capture (per task) -> /synthesize-signals (sprint/
 Content analysis:   /absorb <url> --deep -> /extract-alpha -> /analyze-claims
 Prediction:         /research -> /make-prediction --deep -> /red-team
 Presentation:       /research -> /create-keynote --pptx
+Story -> sprint:    /jira-story-draft -> /acceptance-criteria -> /definition-of-ready -> /refinement-prep -> /sprint-planning
+Sprint operations:  /sprint-planning -> /standup-brief (daily) -> /retro-facilitator -> /release-notes
+Incident response:  /incident-postmortem -> /learning-capture -> /synthesize-signals
 ```
 
 ## Directory Structure
@@ -74,7 +87,7 @@ claude-workbench/
 +-- CLAUDE.md                  # Root context and steering rules
 +-- .claude/
 |   +-- settings.json          # Claude Code permissions
-|   +-- skills/                # 31 skill definitions
+|   +-- skills/                # 41 skill definitions
 +-- .githooks/
 |   +-- pre-commit             # PII guard hook (install via git config core.hooksPath .githooks)
 +-- security/

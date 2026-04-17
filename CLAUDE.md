@@ -127,7 +127,7 @@ Route work through skills whenever possible:
 
 **Learning loop (manual, human-gated at every step):** `/learning-capture` (per task) -> `/synthesize-signals` (end of sprint/quarter) -> `/update-steering-rules --audit` (review proposed rules, apply approved).
 
-**31 skills available.** Run `/delegation` to see the full routing table.
+**41 skills available.** Run `/delegation` to see the full routing table.
 
 ## Directory Structure
 
