@@ -93,3 +93,11 @@ For security findings: never expose actual secret values. ISC items follow CLAUD
 Provide a local repo path or GitHub URL with optional mode flag.
 
 INPUT:
+
+# VERIFY
+
+- Output contains all required sections: Executive Summary, Tier 1 — Blockers, Tier 2 — Hardening, Tier 3 — Tech Debt, Strengths, plus mode-specific section | Verify: Read output, scan for each heading
+- No actual secret values exposed in output (API keys, tokens, passwords) | Verify: Review — confirm output references secret paths only, never values
+- All ISC items follow the format: `- [ ] Criterion | Verify: method` | Verify: `grep '- \[ \]' output` — each hit must contain '| Verify:'
+- Every Tier 1 item has at least one concrete remediation path | Verify: Read Tier 1 — Blockers, confirm each item includes a 'Fix:' or equivalent action
+- Tier 1 secret/credential findings appear before the full output narrative | Verify: Check output ordering — secret findings must not be buried
