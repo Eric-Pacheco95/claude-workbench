@@ -43,6 +43,31 @@ All 10 skills shipped as working placeholders. They follow the workbench SKILL.m
 11. **`/velocity-forecast`** (S) -- Historical velocity -> completion forecast with confidence band. Quarterly planning.
 12. **`/epic-breakdown`** (M) -- Epic -> story tree (distinct from `/story-split` which handles story -> tasks).
 
+## Enterprise Compliance Pack (approved 2026-04-20 — innovation week gap analysis)
+
+### CLAUDE.md hardening (S — edit, not new skills)
+
+1. **PII Do-Not-Send rule** — Add explicit "Do Not Send" section to CLAUDE.md: no SINs, account numbers, full names of real clients, or internal system credentials. Applies to all prompt input, not just Claude artifacts.
+2. **AI-assisted attestation** — Add a one-liner to CLAUDE.md: any Claude-generated artifact destined for regulatory submission must carry "AI-assisted, human-reviewed" in the footer. Enforce via template footers.
+3. **Model logging guidance** — Add note to CLAUDE.md that session model version (e.g. claude-sonnet-4-6) should be recorded alongside artifacts for audit trail.
+
+### Knowledge gaps (S/M — populate before building dependent skills)
+
+4. **`knowledge/regulatory/osfi-b13.md`** (S) — OSFI B-13 technology and cyber risk expectations summary; injected as NFR context by `/create-prd` and `/regulatory-impact`.
+5. **`knowledge/regulatory/pipeda-basics.md`** (S) — PIPEDA privacy obligations for Canadian banks; triggers PII flag in `/requirements-extract`.
+6. **`knowledge/standards/dor-dod.md`** (S) — Unblocks `/definition-of-ready`, `/story-split`, `/refinement-prep` from referencing a real standard. Populate from first field use.
+
+### New skills (S — approved for innovation week)
+
+7. **`/meeting-to-adr`** (S) — Distinct from `/meeting-to-actions`: takes meeting notes where an architectural or process decision was made and outputs a full ADR to `history/decisions/`. Triggers: "we decided to use X", "we're going with Y approach".
+8. **`/test-case-gen`** (S) — Acceptance criteria -> BDD test cases using `templates/test-cases.md`. Chains: `/acceptance-criteria` -> `/test-case-gen` -> QA handoff.
+
+### Templates (S — author from scratch)
+
+9. **`templates/risk-register-entry.md`** (S) — Risk: likelihood × impact grid + control + owner + residual risk. Output format: bank-standard row.
+10. **`templates/test-cases.md`** (S) — BDD-style test case: Feature / Scenario / Given-When-Then / Expected result / Pass criteria.
+11. **`templates/change-request.md`** (S) — Regulated change request: change description + risk + rollback + approvals.
+
 ## Knowledge gaps (deferred — do not auto-extract)
 
 - `knowledge/banking/` — would be useful but must be sourced from TD-approved internal material, not extracted from a personal repo
