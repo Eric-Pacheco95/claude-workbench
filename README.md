@@ -137,6 +137,16 @@ It **does**:
 
 This creates a new SKILL.md in `.claude/skills/` that you can invoke by name in future sessions.
 
+## Credits & Upstream
+
+Inspired by and built on top of [Daniel Miessler's](https://github.com/danielmiessler) open-source work:
+
+- **[PAI (Personal AI Infrastructure)](https://github.com/danielmiessler/PAI)** — Ideal State Criteria (ISC) and the "Scaffolding > Model" founding principle (this repo's *"System > Intelligence — scaffolding matters more than the model"*)
+- **[The Algorithm](https://github.com/danielmiessler/TheAlgorithm)** — the 7-phase `OBSERVE → THINK → PLAN → BUILD → EXECUTE → VERIFY → LEARN` doctrine
+- **[Fabric](https://github.com/danielmiessler/fabric)** — pattern names including `extract-wisdom`, `extract-alpha`, `analyze-claims`, `find-logical-fallacies`, `first-principles`, `improve-prompt`, and `create-pattern`
+
+These projects are public and meant to be built on; this credit points back so others can find and contribute to the upstream work.
+
 ## License
 
 Private use.
