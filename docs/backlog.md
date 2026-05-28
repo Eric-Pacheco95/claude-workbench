@@ -73,6 +73,34 @@ All 10 skills shipped as working placeholders. They follow the workbench SKILL.m
 - `knowledge/banking/` — would be useful but must be sourced from TD-approved internal material, not extracted from a personal repo
 - `knowledge/standards/review-checklists.md` — code / PRD / architecture review templates; author from scratch when first needed
 
+## Approved 2026-05-27 — Enterprise context layer (read-only retrieval + recall)
+
+> Approved subset from `/extract-harness --enterprise --dry-run`. Reframe: the BA/agile skills already exist but consume pasted text; the bank stack now has live Confluence/Jira/Outlook. This pack wires read-only retrieval into the harness plus the highest-ROI context-engineering patterns. **Selected:** gaps 1-5, 10, 13, 14 (Bands A, B, D-subset). **Not selected:** gaps 6-9 (Band C per-workflow skills — already covered by Enterprise Pack #1/#4 once an adapter is wired), 11, 12, 15.
+>
+> **Constraint — bank laptop has Python only for script tooling.** Everything below is pure-Python: no node/npm/bash toolchain. Recommend trimming the `.claude/settings.json` Bash allowlist to drop node/npm so it matches the environment.
+> **All adapters read-only.** In-progress automations are read-only today but may transition to write access; that transition is a SOX change-control matter (out of scope here — see deferred gap #15).
+
+### A. Foundation — must land before any adapter (everything below puts external content into context)
+
+1. **(gap #1) Data-classification + Do-Not-Send gate** (S) — promote Compliance Pack #1 from a CLAUDE.md prose rule to an *enforced pre-retrieval checkpoint*: a Python PreToolUse-hook scrubber that runs before any Confluence/Jira/Outlook content enters context; hard-blocks SIN/PAN/credential/JWT patterns with count-only output. Prerequisite for all of section B — without it each adapter is a SOX/PCI egress finding.
+2. **(gap #2) AI-assisted attestation + model-version logging** (S) — Compliance Pack #2/#3: "AI-assisted, human-reviewed" footer on generated artifacts + record the session model version alongside outputs for audit. Pair with #1.
+2b. **(env hardening) `.claude/settings.json` allowlist trim** (S) — drop `node`/`npm` from the Bash allowlist so permissions match the Python-only laptop; smaller allowlist = smaller attack surface and no accidental non-Python tool paths. Pure config edit, no dependency.
+
+### B. Read-only retrieval adapters — all gated by A.1, Python-only
+
+3. **(gap #3) Confluence read adapter** (M) — read-only retrieval source feeding `/regulatory-impact` and `/requirements-extract`. Connection mechanism (approved MCP / API / local mirror) is an OQ; any outbound data path must pass A.1. A local mirror may sidestep the gate entirely.
+4. **(gap #4) Jira read adapter** (M) — read-only board/ticket pull feeding `/standup-brief`, `/refinement-prep`, `/sprint-planning`.
+5. **(gap #5) Outlook read adapter** (M) — read-only calendar + thread pull feeding `/meeting-to-actions` (Enterprise Pack #4) and `/requirements-extract` (Enterprise Pack #1), replacing paste input.
+
+### C. Context-engineering patterns
+
+6. **(gap #10) Recall / memory-index** (M, HIGHEST LEVER) — `MEMORY.md`-style one-line index + Python retrieval over `history/decisions/` + `history/lessons-learned/` (plus a Confluence mirror once B.3 lands). For a knowledge-heavy stack this is the pattern that stops Claude re-deriving context every session. **Backend LOCKED 2026-05-27: lexical-only** — pure-Python BM25 (`rank-bm25`) or stdlib TF-IDF; no embeddings, no network, no model install; ships cleanly under the A.1 gate. *Upgrade path (deferred): hybrid lexical+semantic (L) only if an approved on-device embedding model later lands — outbound embedding APIs stay forbidden by A.1.*
+7. **(gap #13) Sub-agent isolation for large tool outputs** (S) — route large Confluence pages / Jira exports through a sub-agent; main thread keeps a distilled result. Python PostToolUse byte-counter hook for nudges. Load-bearing once B.3-B.5 return live payloads.
+8. **(gap #14) Ceremony tier / 4-axis** (S) — CLAUDE.md doc edit, no tooling: right-size rigor so trivial reversible tasks skip the gate while regulated decisions get full ISC + ADR.
+
+### Build order
+A.1 -> A.2 first. Then B.3 / B.4 / B.5 in any order. C.7 lands with the adapters (it exists to tame their payloads). C.6 can start anytime on the local `history/` corpus and gains the Confluence mirror after B.3. C.8 is doc-only and can land anytime.
+
 ## Notes on sizing
 
 - **S** -- small, < 2 hours to build (single-file SKILL.md, one template, minimal branching)
